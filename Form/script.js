@@ -3,7 +3,6 @@ angular.module('RegForm', [])
         $scope.currentStep = 1;
         $scope.formData = {};
         $scope.newValue = {};
-
         $scope.saveStep = function (step) {
 
             $scope.currentStep = step + 1;

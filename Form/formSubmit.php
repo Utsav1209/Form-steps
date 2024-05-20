@@ -34,7 +34,6 @@ if ($data && isset($data['final_submit'])) {
     $contact_phone = $data['contact_phone'];
     $emp_count = $data['emp_count'];
     $contract = isset($data['contract']) ? ($data['contract'] == 'Yes' ? 'Yes' : 'No') : 'No';
-    var_dump($contrct);
     $comment = $data['comment'];
     $fam = isset($data['fam']) ? 'Yes' : 'No';
     $com = isset($data['com']) ? 'Yes' : 'No';
