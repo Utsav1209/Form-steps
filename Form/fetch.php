@@ -1,7 +1,7 @@
 <?php
 include("connect.php");
 
-$sql = "SELECT * FROM `userdata`";
+$sql = "SELECT * FROM `userdata` WHERE delete_id = 1";
 $result = mysqli_query($conn, $sql);
 
 $data = [];
