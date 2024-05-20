@@ -49,7 +49,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="cname">Company Name</label><span style="color: red;">*</span>
-                    <input type="text" class="form-control" id="cname" name="cname" ng-model="formData.cname" placeholder="Enter Company Name" required minlength="2" maxlength="20">
+                    <input type="text" class="form-control" id="cname" name="cname" ng-model="formData.cname" placeholder="Enter Company Name" required minlength="2" maxlength="50">
                 </div>
             </div>
             <div class="col-md-4">
@@ -57,9 +57,12 @@
                     <label for="ctype">Company Type</label><span style="color: red;">*</span>
                     <select class="form-control" id="ctype" name="ctype" ng-model="formData.ctype" required>
                         <option value="" disabled selected>Select Company Type</option>
-                        <option value="option1">Payroll</option>
-                        <option value="option2">Private</option>
-                        <option value="option3">Public</option>
+                        <?php
+                        $enum_values = array('Payroll', 'Public', 'Private');
+                        foreach ($enum_values as $value) {
+                            echo "<option value='$value'>$value</option>";
+                        }
+                        ?>
                     </select>
                 </div>
             </div>
@@ -78,7 +81,26 @@
                     <label for="pri_address2">Address Line 2</label><span style="color: red;">*</span>
                     <input type="text" class="form-control" id="pri_address2" name="pri_address2" ng-model="formData.pri_address2" placeholder="Enter Address" required>
                 </div>
+                <fieldset ng-repeat="row in rows">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="pri_address2{{$index}}">Address Line 2</label><span style="color: red;">*</span>
+                            <input type="text" class="form-control" id="pri_address2{{$index}}" name="pri_address2{{$index}}" ng-model="formData['pri_address2' + ($index + 1)]" placeholder="Enter Address" required>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" name="remove" ng-model="row.remove" class="btn btn-danger btn-sm" ng-click="removeRow(row)">
+                                <span class="glyphicon glyphicon-minus"></span>Remove
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    <button type="button" name="add_more" class="btn btn-success add-more-btn" ng-click="addRow()">
+                        <span class="glyphicon glyphicon-plus"></span>Add
+                    </button>
+                </div>
             </div>
+
         </div>
         <div class="row justify-content-center">
             <div class="col-md-3">
@@ -174,9 +196,12 @@
                     <label for="contact_type">Contact Type</label><span style="color: red;">*</span>
                     <select class="form-control" id="contact_type" name="contact_type" ng-disabled="currentStep < 2" ng-model="formData.contact_type" required>
                         <option value="" disabled selected>Select Contact Type</option>
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                        <option value="option3">Option 3</option>
+                        <?php
+                        $enum_values = array('Primary', 'Secondary', 'Tertiary');
+                        foreach ($enum_values as $value) {
+                            echo "<option value='$value'>$value</option>";
+                        }
+                        ?>
                     </select>
                 </div>
             </div>
@@ -216,9 +241,9 @@
                 <div class="form-group">
                     <label for="contract">Contract?</label><span style="color: red;">*</span><br>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="contract_yes" name="contract_yes" ng-disabled="currentStep < 2" ng-model="formData.contact" value="Yes">
+                        <input class="form-check-input" type="radio" id="contract_yes" name="contract" ng-disabled="currentStep < 2" ng-model="formData.contact" value="Yes">
                         <label class="form-check-label" for="contract_yes">Yes</label>&nbsp;&nbsp;&nbsp;
-                        <input class="form-check-input" type="radio" id="contract_no" name="contract_no" ng-disabled="currentStep < 2" ng-model="formData.contact" value="No">
+                        <input class="form-check-input" type="radio" id="contract_no" name="contract" ng-disabled="currentStep < 2" ng-model="formData.contact" value="No">
                         <label class="form-check-label" for="contract_no">No</label>
                     </div>
                 </div>
@@ -241,30 +266,30 @@
         <div class="col-md-12">
             <div class="form-group">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="true" id="fam" ng-disabled="currentStep < 3" name="fam" ng-model="formData.fam" required>
+                    <input class="form-check-input" type="checkbox" value="true" id="fam" ng-disabled="currentStep < 3" name="fam" ng-model="formData.fam">
                     <label class="form-check-label" for="fam">
                         FAM - Familv Defender
-                    </label><span style="color: red;">*</span>
+                    </label>
                 </div>
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="true" id="com" ng-disabled="currentStep < 3" name="com" ng-model="formData.com" required>
+                    <input class="form-check-input" type="checkbox" value="true" id="com" ng-disabled="currentStep < 3" name="com" ng-model="formData.com">
                     <label class="form-check-label" for="com">
                         COM - Combo
-                    </label><span style="color: red;">*</span>
+                    </label>
                 </div>
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="true" id="fbc" ng-disabled="currentStep < 3" name="fbc" ng-model="formData.fbc" required>
+                    <input class="form-check-input" type="checkbox" value="true" id="fbc" ng-disabled="currentStep < 3" name="fbc" ng-model="formData.fbc">
                     <label class="form-check-label" for="fbc">
                         FBC - Family/Business Combo
-                    </label><span style="color: red;">*</span>
+                    </label>
                 </div>
             </div>
         </div>
@@ -273,9 +298,9 @@
                 <div class="form-group">
                     <label for="cc">Credit Card ($2.00 Service Fee)</label><span style="color: red;">*</span><br>
                     <div class="form-check form-check-inline" required>
-                        <input class="form-check-input" type="radio" id="cc_yes" name="cc_yes" ng-disabled="currentStep < 3" ng-model="formData.cc" value="Yes">
+                        <input class="form-check-input" type="radio" id="cc_yes" name="cc" ng-disabled="currentStep < 3" ng-model="formData.cc" value="Yes">
                         <label class="form-check-label" for="cc_yes">Yes</label>&nbsp;&nbsp;&nbsp;
-                        <input class="form-check-input" type="radio" id="cc_no" name="cc_no" ng-disabled="currentStep < 3" ng-model="formData.cc" value="No">
+                        <input class="form-check-input" type="radio" id="cc_no" name="cc" ng-disabled="currentStep < 3" ng-model="formData.cc" value="No">
                         <label class="form-check-label" for="cc_no">No</label>
                     </div>
                 </div>
@@ -406,7 +431,7 @@
             </div>
         </div>
         <div class="col-md-2">
-            <button type="submit" class="btn btn-primary" ng-disabled="currentStep < 5">Submit</button>
+            <!-- <button type="submit" class="btn btn-primary" ng-disabled="currentStep < 5">Submit</button> -->
             <button type="button" class="btn btn-primary" ng-click="submitForm()" name="final_submit" ng-disabled="currentStep < 5">Final Submit</button>
         </div>
     </form>

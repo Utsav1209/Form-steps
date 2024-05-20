@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <div class="container-fluid" style="margin: 10px 10px;" ng-app="FetchData" ng-controller="FetchDataCntrl">
+    <div class="container-fluid" style="margin: 10px 10px;" ng-app="FetchData" ng-controller="FetchDataCntrl as Ctrl">
         <!-- {{data}} -->
         <!-- <div >
             {{item}}
@@ -20,16 +20,18 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Company Name</th>
                     <th>Company Type</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in data track by item.id">
-                    <td>{{item.name}}</td>
-                    <td>{{item.cname}}</td>
-                    <td>{{item.ctype}}</td>
+                <tr ng-repeat="item in Ctrl.data">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.cname }}</td>
+                    <td>{{ item.ctype }}</td>
                 </tr>
             </tbody>
         </table>

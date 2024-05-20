@@ -5,36 +5,25 @@ angular.module('RegForm', [])
         $scope.newValue = {};
 
         $scope.saveStep = function (step) {
-            $http.post('steps.php', $scope.formData)
-                .then(function (response) {
-                    console.log("Response", response);
-                    console.log('Step ' + step + ' data saved successfully');
-                    $scope.currentStep = step + 1;
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: 'Step ' + step + ' data saved successfully'
-                    });
-                }, function (error) {
-                    console.error('Error saving step ' + step + ' data:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Failed to save step ' + step + ' data'
-                    });
-                });
+
+            $scope.currentStep = step + 1;
+
         };
 
         $scope.submitForm = function () {
             $scope.newValue = {
                 ...$scope.formData,
-                final_submit: true
+                final_submit: true,
+
             }
             console.log("newValue", $scope.newValue);
             $http.post('formSubmit.php', $scope.newValue)
                 .then(function (response) {
                     console.log("Form Response", response);
                     console.log('Form submitted successfully');
+                    $scope.formData = {};
+                    $scope.currentStep = 1;
+                    $scope.formDisabled = false;
                     Swal.fire({
                         icon: 'success',
                         title: 'Success',
@@ -48,6 +37,18 @@ angular.module('RegForm', [])
                         text: 'Failed to submit form'
                     });
                 });
+        };
+
+        $scope.rows = [];
+
+        $scope.addRow = function () {
+            var id = $scope.rows.length + 1;
+            $scope.rows.push({ 'id': 'dynamic' + id });
+        };
+
+        $scope.removeRow = function (row) {
+            var index = $scope.rows.indexOf(row);
+            $scope.rows.splice(index, 1);
         };
 
     });

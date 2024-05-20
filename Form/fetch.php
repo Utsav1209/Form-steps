@@ -1,14 +1,13 @@
 <?php
 include("connect.php");
 
-$sql = "SELECT name, cname, ctype FROM `userdata`";
+$sql = "SELECT * FROM `userdata`";
 $result = mysqli_query($conn, $sql);
 
-$data = array();
+$data = [];
 
 while ($row = mysqli_fetch_assoc($result)) {
     $data[] = $row;
 }
-
 
 echo json_encode($data);
