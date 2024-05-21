@@ -1,6 +1,10 @@
 angular.module('FetchData', [])
     .controller('FetchDataCntrl', function ($scope, $http) {
 
+        $scope.formatDate = function (date) {
+            return moment(date).format('MM/DD/YYYY');
+        };
+
         $scope.fetchData = function () {
             $http.get('fetch.php')
                 .then(function (response) {
