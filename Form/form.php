@@ -21,8 +21,6 @@
         $(document).ready(function() {
             $('#contact_phone').mask('(999) 999-9999');
         });
-    </script>
-    <!-- <script>
         // Use moment.js to format dates
         $(document).ready(function() {
             $('#start_date').on('change', function() {
@@ -35,7 +33,7 @@
                 $(this).val(date);
             });
         });
-    </script> -->
+    </script>
 </head>
 
 <body>
@@ -73,37 +71,40 @@
         <h6 class="section">Primary Address</h6>
         <hr>
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label for="pri_address1">Address Line 1</label><span style="color: red;">*</span>
                     <input type="text" class="form-control" id="pri_address1" name="pri_address1" ng-model="formData.pri_address1" placeholder="Enter Address" required>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="pri_address2">Address Line 2</label><span style="color: red;">*</span>
-                    <input type="text" class="form-control" id="pri_address2" name="pri_address2" ng-model="formData.pri_address2" placeholder="Enter Address" required>
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-md-11">
+                        <label for="pri_address2">Address Line 2</label><span style="color: red;">*</span>
+                        <input type="text" class="form-control" id="pri_address2" name="pri_address2" ng-model="formData.pri_address2" placeholder="Enter Address" required>
+                    </div>
+                    <div class="col-md-1 d-flex align-items-end">
+                        <button type="button" name="add_more" class="btn btn-success add-more-btn" ng-click="addRow()">
+                            <span class="glyphicon glyphicon-plus"></span> <b>+</b>
+                        </button>
+                    </div>
                 </div>
                 <fieldset ng-repeat="row in rows">
                     <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="pri_address2{{$index}}">Address Line 2</label><span style="color: red;">*</span>
-                            <input type="text" class="form-control" id="pri_address2{{$index}}" name="pri_address2{{$index}}" ng-model="formData['pri_address2' + ($index + 1)]" placeholder="Enter Address" required>
-                        </div>
-                        <div class="col-md-3">
-                            <button type="button" name="remove" ng-model="row.remove" class="btn btn-danger btn-sm" ng-click="removeRow(row)">
-                                <span class="glyphicon glyphicon-minus"></span>Remove
-                            </button>
+                        <div class="form-group row">
+                            <div class="col-md-11">
+                                <label for="pri_address2{{$index}}">Address Line 2</label><span style="color: red;">*</span>
+                                <input type="text" class="form-control" id="pri_address2{{$index}}" name="pri_address2{{$index}}" ng-model="formData['pri_address2' + ($index + 1)]" placeholder="Enter Address" required>
+                            </div>
+                            <div class="col-md-1 d-flex align-items-end">
+                                <button type="button" name="remove" ng-model="row.remove" class="btn btn-danger btn-sm" ng-click="removeRow(row)">
+                                    <span class="glyphicon glyphicon-minus"></span> <b>&minus;</b>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </fieldset>
-                <div class="form-group">
-                    <button type="button" name="add_more" class="btn btn-success add-more-btn" ng-click="addRow()">
-                        <span class="glyphicon glyphicon-plus"></span>Add
-                    </button>
-                </div>
             </div>
-
         </div>
         <div class="row justify-content-center">
             <div class="col-md-3">
@@ -127,7 +128,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="pri_country">Country</label><span style="color: red;">*</span>
-                    <input type="text" class="form-control" id="pri_country" name="pri_country" ng-model="formData.pri_country" placeholder="Enter Country" ng-change="filterPriCountries()" required>
+                    <input type="text" class="form-control" id="pri_country" name="pri_country" ng-model="formData.pri_country" placeholder="Enter Country" ng-change="filterPriCountries()" required autocomplete="off">
                     <div style="max-height: 200px; overflow-y: auto; cursor: pointer;" ng-show="formData.pri_country && filteredPriCountries.length > 0">
                         <div class="country-list" ng-repeat="country in filteredPriCountries" ng-click="selectPriCountry(country)" ng-mouseover="highlightCountry($event)" ng-mouseout="removeHighlight($event)">{{ country }}</div>
                     </div>
@@ -174,7 +175,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="secondary_country">Country</label><span style="color: red;">*</span>
-                    <input type="text" class="form-control" id="secondary_country" name="secondary_country" ng-model="formData.secondary_country" placeholder="Enter Country" ng-change="filterSecCountries()" required>
+                    <input type="text" class="form-control" id="secondary_country" name="secondary_country" ng-model="formData.secondary_country" placeholder="Enter Country" ng-change="filterSecCountries()" required autocomplete="off">
                     <div style="max-height: 200px; overflow-y: auto; cursor:pointer" ng-show="formData.secondary_country && filteredSecCountries.length > 0">
                         <div class="country-list" ng-repeat="country in filteredSecCountries" ng-click="selectSecCountry(country)" ng-mouseover="highlightCountry($event)" ng-mouseout="removeHighlight($event)">{{ country }}</div>
                     </div>
@@ -397,7 +398,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="billing_country">Country</label><span style="color: red;">*</span>
-                    <input type="text" class="form-control" id="billing_country" ng-disabled="currentStep < 4" name="billing_country" ng-model="formData.billing_country" placeholder="Enter Country" ng-change="filterCountries()" required>
+                    <input type="text" class="form-control" id="billing_country" ng-disabled="currentStep < 4" name="billing_country" ng-model="formData.billing_country" placeholder="Enter Country" ng-change="filterCountries()" required autocomplete="off">
                     <div style="max-height: 200px; overflow-y: auto; cursor: pointer;" ng-show="formData.billing_country && filteredCountries.length > 0">
                         <div class="country-list" ng-repeat="country in filteredCountries" ng-click="selectCountry(country)" ng-mouseover="highlightCountry($event)" ng-mouseout="removeHighlight($event)">{{ country }}</div>
                     </div>
