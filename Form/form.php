@@ -18,6 +18,9 @@
         $(document).ready(function() {
             $('#phone').mask('(999) 999-9999');
         });
+        $(document).ready(function() {
+            $('#contact_phone').mask('(999) 999-9999');
+        });
     </script>
     <!-- <script>
         // Use moment.js to format dates
@@ -125,11 +128,13 @@
                 <div class="form-group">
                     <label for="pri_country">Country</label><span style="color: red;">*</span>
                     <input type="text" class="form-control" id="pri_country" name="pri_country" ng-model="formData.pri_country" placeholder="Enter Country" ng-change="filterPriCountries()" required>
-                    <div ng-show="filteredPriCountries.length > 0" style="background-color: white; border: 1px solid #ccc;">
-                        <div ng-repeat="country in filteredPriCountries" ng-click="selectPriCountry(country)" style="cursor: pointer;" onmouseover="this.style.backgroundColor='lightblue'" onmouseout="this.style.backgroundColor='white'">{{ country }}</div>
+                    <div style="max-height: 200px; overflow-y: auto; cursor: pointer;" ng-show="formData.pri_country && filteredPriCountries.length > 0">
+                        <div class="country-list" ng-repeat="country in filteredPriCountries" ng-click="selectPriCountry(country)" ng-mouseover="highlightCountry($event)" ng-mouseout="removeHighlight($event)">{{ country }}</div>
                     </div>
+                    <div ng-show="errorMessage1" style="color: red;">{{ errorMessage1 }}</div>
                 </div>
             </div>
+
         </div>
         <h6 class="section">Secondary Address</h6>
         <hr>
@@ -166,26 +171,17 @@
                     <input type="text" class="form-control" id="secondary_state" name="secondary_state" ng-model="formData.secondary_state" placeholder="Enter State" required>
                 </div>
             </div>
-            <!-- <div class="col-md-3">
-                <div class="form-group">
-                    <label for="secondary_country">Country</label><span style="color: red;">*</span>
-                    <select type="text" class="form-control" id="secondary_country" name="secondary_country" ng-model="formData.secondary_country" placeholder="Enter Country" required>
-                        <detalist id="countryName">
-                            <option value="" disabled>Select Country</option>
-                            <option ng-repeat="country in countryList" value="{{country}}">{{country}}</option>
-                        </detalist>
-                    </select>
-                </div>
-            </div> -->
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="secondary_country">Country</label><span style="color: red;">*</span>
                     <input type="text" class="form-control" id="secondary_country" name="secondary_country" ng-model="formData.secondary_country" placeholder="Enter Country" ng-change="filterSecCountries()" required>
-                    <div ng-show="filteredSecCountries.length > 0" style="background-color: white; border: 1px solid #ccc;">
-                        <div ng-repeat="country in filteredSecCountries" ng-click="selectSecCountry(country)" style="cursor: pointer;" onmouseover="this.style.backgroundColor='lightblue'" onmouseout="this.style.backgroundColor='white'">{{ country }}</div>
+                    <div style="max-height: 200px; overflow-y: auto; cursor:pointer" ng-show="formData.secondary_country && filteredSecCountries.length > 0">
+                        <div class="country-list" ng-repeat="country in filteredSecCountries" ng-click="selectSecCountry(country)" ng-mouseover="highlightCountry($event)" ng-mouseout="removeHighlight($event)">{{ country }}</div>
                     </div>
+                    <div ng-show="errorMessage2" style="color: red;">{{ errorMessage2 }}</div>
                 </div>
             </div>
+
         </div>
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -197,7 +193,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="website">Website</label><span style="color: red;">*</span>
-                    <input type="text" class="form-control" id="website" name="website" ng-model="formData.website" placeholder="Enter Website" required>
+                    <input type="url" class="form-control" id="website" name="website" ng-model="formData.website" placeholder="Enter Website" pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?" required>
                 </div>
             </div>
         </div>
@@ -245,13 +241,13 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="contact_phone">Contact Phone</label><span style="color: red;">*</span>
-                    <input type="number" class="form-control" id="contact_phone" name="contact_phone" ng-disabled="currentStep < 2" ng-model="formData.contact_phone" placeholder="Enter Phone" required>
+                    <input type="text" class="form-control" id="contact_phone" name="contact_phone" ng-disabled="currentStep < 2" ng-model="formData.contact_phone" placeholder="Enter Phone" required>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="emp_count">Employee Count</label><span style="color: red;">*</span>
-                    <input type="number" class="form-control" id="emp_count" name="emp_count" ng-disabled="currentStep < 2" ng-model="formData.emp_count" placeholder="Enter Employee Count" required>
+                    <input type="number" class="form-control" id="emp_count" name="emp_count" ng-disabled="currentStep < 2" ng-model="formData.emp_count" placeholder="Enter Employee Count" min="5" required>
                 </div>
             </div>
             <div class="col-md-4">
@@ -331,7 +327,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="end_date">Group End Date</label><span style="color: red;">*</span>
-                    <input type="date" class="form-control" id="end_date" name="end_date" ng-disabled="currentStep < 3" ng-model="formData.end_date" placeholder="Enter Date" required>
+                    <input type="date" class="form-control" id="end_date" name="end_date" ng-disabled="currentStep < 3" ng-model="formData.end_date" placeholder="Enter Date" required min="{{ formData.start_date | date: 'yyyy-MM-dd' }}">
                 </div>
             </div>
         </div>
@@ -402,9 +398,10 @@
                 <div class="form-group">
                     <label for="billing_country">Country</label><span style="color: red;">*</span>
                     <input type="text" class="form-control" id="billing_country" ng-disabled="currentStep < 4" name="billing_country" ng-model="formData.billing_country" placeholder="Enter Country" ng-change="filterCountries()" required>
-                    <div ng-show="filteredCountries.length > 0" style="background-color: white; border: 1px solid #ccc;">
-                        <div ng-repeat="country in filteredCountries" ng-click="selectCountry(country)" style="cursor: pointer;" onmouseover="this.style.backgroundColor='lightblue'" onmouseout="this.style.backgroundColor='white'">{{ country }}</div>
+                    <div style="max-height: 200px; overflow-y: auto; cursor: pointer;" ng-show="formData.billing_country && filteredCountries.length > 0">
+                        <div class="country-list" ng-repeat="country in filteredCountries" ng-click="selectCountry(country)" ng-mouseover="highlightCountry($event)" ng-mouseout="removeHighlight($event)">{{ country }}</div>
                     </div>
+                    <div ng-show="errorMessage3" style="color: red;">{{ errorMessage3 }}</div>
                 </div>
             </div>
         </div>
