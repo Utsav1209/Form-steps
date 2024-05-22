@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Form</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
@@ -13,28 +15,14 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#phone').mask('(999) 999-9999');
             $('#contact_phone').mask('(999) 999-9999');
         });
-        // Use moment.js to format dates
-        // $(document).ready(function() {
-        //     $('#start_date').on('change', function() {
-        //         var date = moment(this.value, 'YYYY-MM-DD').format('MM/DD/YYYY');
-        //         $(this).val(date);
-        //     });
-
-        //     $('#end_date').on('change', function() {
-        //         var date = moment(this.value, 'YYYY-MM-DD').format('MM/DD/YYYY');
-        //         $(this).val(date);
-        //     });
-        // });
     </script>
 </head>
 
@@ -42,8 +30,8 @@
     <div class="progress-bar">
         <div class="filled"></div>
     </div>
-    <h1>Registration Form</h1>
-    <h6 class="form-section">Step 1: Basic Details</h6>
+    <h1><b>Registration Form</b></h1>
+    <h6 class="form-section"><i class="fa-solid fa-bars-staggered"></i>&nbsp;&nbsp;Step 1: Basic Details</h6>
     <form class="container-fluid form" ng-submit="saveStep(1)" method="post" ng-disabled="currentStep < 1">
         <div class=" row justify-content-center">
             <div class="col-md-4">
@@ -207,7 +195,7 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
-    <h6 class="form-section">Step 2: Company Contact</h6>
+    <h6 class="form-section"><i class="fa-solid fa-bars-staggered"></i>&nbsp;&nbsp;Step 2: Company Contact</h6>
     <form class="container-fluid form" ng-submit="saveStep(2)" method="post">
         <div class="row justify-content-center">
             <div class="col-md-4">
@@ -278,7 +266,7 @@
             <button type="submit" class="btn btn-primary" ng-disabled="currentStep < 2">Submit</button>
         </div>
     </form>
-    <h6 class="form-section">Step 3: Plan Details</h6>
+    <h6 class="form-section"><i class="fa-solid fa-bars-staggered"></i>&nbsp;&nbsp;Step 3: Plan Details</h6>
     <form class="container-fluid form" ng-submit="saveStep(3)" method="post">
         <h6 class="section">Plan Classes</h6>
         <hr>
@@ -343,7 +331,7 @@
             <button type="submit" class="btn btn-primary" ng-disabled="currentStep < 3">Submit</button>
         </div>
     </form>
-    <h6 class="form-section">Step 4: Account & Billing Details</h6>
+    <h6 class="form-section"><i class="fa-solid fa-bars-staggered"></i>&nbsp;&nbsp;Step 4: Account & Billing Details</h6>
     <form class="container-fluid form" ng-submit="saveStep(4)" method="post">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -433,7 +421,7 @@
             <button type="submit" class="btn btn-primary" ng-disabled="currentStep < 4">Submit</button>
         </div>
     </form>
-    <h6 class="form-section">Step 5: Social Media</h6>
+    <h6 class="form-section"><i class="fa-solid fa-bars-staggered"></i>&nbsp;&nbsp;Step 5: Social Media</h6>
     <form class="container-fluid form" ng-submit="saveStep(5)" method="post">
         <div class="row justify-content-center">
             <div class="col-md-4">
@@ -455,9 +443,13 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
-            <!-- <button type="submit" class="btn btn-primary" ng-disabled="currentStep < 5">Submit</button> -->
-            <button type="button" class="btn btn-primary" ng-click="submitForm()" name="final_submit" ng-disabled="currentStep < 5">Final Submit</button>
+        <div class="row">
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary" ng-disabled="currentStep < 5">Submit</button>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-success" ng-click="submitForm()" name="final_submit" ng-disabled="currentStep < 5">Final Submit</button>
+            </div>
         </div>
     </form>
     <script>
@@ -478,7 +470,7 @@
             function updateFormattedDate(input, display) {
                 const dateValue = input.value;
                 if (dateValue) {
-                    const formattedDate = moment(dateValue).format('MM-DD-YYYY');
+                    const formattedDate = moment(dateValue).format('MM/DD/YYYY');
                     display.textContent = `Selected Date: ${formattedDate}`;
                 } else {
                     display.textContent = '';
@@ -492,8 +484,6 @@
             endDateInput.addEventListener('change', () => {
                 updateFormattedDate(endDateInput, formattedEndDateDisplay);
             });
-
-            // Initialize the display if there are pre-filled values
             updateFormattedDate(startDateInput, formattedStartDateDisplay);
             updateFormattedDate(endDateInput, formattedEndDateDisplay);
         });

@@ -7,9 +7,7 @@
     <title>User Data</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-
     <style>
-        /* Custom CSS */
         .modal-dialog {
             width: 100%;
             max-width: none;
@@ -20,6 +18,17 @@
                 margin: 30px auto;
                 max-width: 83.333333%;
             }
+        }
+
+        th {
+            text-align: center;
+            color: black;
+            background-color: lightslategray;
+        }
+
+        td {
+            align-content: center;
+            text-align: center;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -34,9 +43,10 @@
 </head>
 
 <body ng-app="FetchData" ng-controller="FetchDataCntrl">
+    <h1><b>Registration Table</b></h1>
     <div class="container-fluid" style="margin: 10px 10px;">
         <table class="table table-bordered">
-            <thead style="text-align: center;">
+            <thead>
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
@@ -53,7 +63,7 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody style="text-align:center;">
+            <tbody>
                 <tr ng-repeat="item in data">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ item.name }}</td>
@@ -68,18 +78,17 @@
                     <!-- <td>{{ formatDate(item.end_date) }}</td> -->
                     <!-- <td>{{ item.billing_method }}</td> -->
                     <td>
-                        <button class="btn btn-danger" ng-click="dataDelete(item.id)">Delete</button>
-                        <button class="btn btn-success" ng-click="dataEdit(item.id)">Edit</button>
+                        <button class="btn btn-danger" ng-click="dataDelete(item.id)" style="width:65px">Delete</button>
+                        <button class="btn btn-success" ng-click="dataEdit(item.id)" style="width:65px">Edit</button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-
         <div class="modal-dialog">
             <div class="modal-content">
-                <h2 style="text-align:center;  font-family: Arial, sans-serif; margin:15px; color:brown;">Edit Form</h2>
+                <h1 style="text-align:center;  font-family:'Courier New', Courier, monospace; margin:15px;"><b>Edit Form</b></h1>
                 <div class="modal-body">
                     <form class="container-fluid form" method="post" ng-submit="saveEdit()">
                         <h6 class="form-section" style="margin-left:-177px; margin-bottom:15px; margin-top:5px;">Step 1: Basic Details</h6>
@@ -179,7 +188,6 @@
                                     <div ng-show="errorMessage1" style="color: red;">{{ errorMessage1 }}</div>
                                 </div>
                             </div>
-
                         </div>
                         <h6 class="section">Secondary Address</h6>
                         <hr>
@@ -226,7 +234,6 @@
                                     <div ng-show="errorMessage2" style="color: red;">{{ errorMessage2 }}</div>
                                 </div>
                             </div>
-
                         </div>
                         <div class="row justify-content-center">
                             <div class="col-md-6">
@@ -242,9 +249,7 @@
                                 </div>
                             </div>
                         </div>
-
                         <h6 class="form-section" style="margin-left:-177px; margin-bottom:15px; margin-top:5px;">Step 2: Company Contact</h6>
-
                         <div class="row justify-content-center">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -310,9 +315,7 @@
                                 </div>
                             </div>
                         </div>
-
                         <h6 class="form-section" style="margin-left:-177px; margin-bottom:15px; margin-top:5px;">Step 3: Plan Details</h6>
-
                         <h6 class="section">Plan Classes</h6>
                         <hr>
                         <div class="col-md-12">
@@ -361,20 +364,18 @@
                                 <div class="form-group">
                                     <label for="start_date">Group Start Date</label><span style="color: red;">*</span>
                                     <input type="date" class="form-control" id="start_date" name="start_date" ng-disabled="currentStep < 3" ng-model="formData.start_date" placeholder="Enter Date" required>
-                                    <div id="formatted_start_date" class="formatted-date"></div>
+                                    <div id="formatted_start_date" class="formatted-date">Start Date(MM/DD/YYYY) : {{ formattedStartDate }}</div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="end_date">Group End Date</label><span style="color: red;">*</span>
                                     <input type="date" class="form-control" id="end_date" name="end_date" ng-disabled="currentStep < 3" ng-model="formData.end_date" placeholder="Enter Date" required min="{{ formData.start_date | date: 'yyyy-MM-dd' }}">
-                                    <div id="formatted_end_date" class="formatted-date"></div>
+                                    <div id="formatted_end_date" class="formatted-date">End Date(MM/DD/YYYY) : {{ formattedEndDate }}</div>
                                 </div>
                             </div>
                         </div>
-
                         <h6 class="form-section" style="margin-left:-177px; margin-bottom:15px; margin-top:5px;">Step 4: Account & Billing Details</h6>
-
                         <div class="row justify-content-center">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -459,9 +460,7 @@
                                 </div>
                             </div>
                         </div>
-
                         <h6 class="form-section" style="margin-left:-177px; margin-bottom:15px; margin-top:5px;">Step 5: Social Media</h6>
-
                         <div class="row justify-content-center">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -485,7 +484,6 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary" name="update" style="width:100px">Update</button>
-
                                 <button type="button" class="btn btn-danger" id="closeButton" style="width:100px">Close</button>
                             </div>
                         </div>

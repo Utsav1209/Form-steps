@@ -1,6 +1,7 @@
 angular.module('FetchData', [])
     .controller('FetchDataCntrl', function ($scope, $http) {
 
+        // Fetch Data In Edit Form
         $scope.formData = {};
         $scope.dataEdit = function (id) {
             $http.get('fetchEdit.php?id=' + id)
@@ -8,7 +9,7 @@ angular.module('FetchData', [])
                     console.log(id)
                     $scope.formData = response.data;
                     if ($scope.formData && $scope.formData.pri_zip !== null && !isNaN($scope.formData.pri_zip)) {
-                        $scope.formData.pri_zip = parseInt($scope.formData.pri_zip); // Convert to integer
+                        $scope.formData.pri_zip = parseInt($scope.formData.pri_zip); 
                     }
                     if ($scope.formData && $scope.formData.secondary_zip !== null && !isNaN($scope.formData.secondary_zip)) {
                         $scope.formData.secondary_zip = parseInt($scope.formData.secondary_zip);
@@ -29,8 +30,8 @@ angular.module('FetchData', [])
                     console.error('Error fetching data:', error);
                 });
         };
-        // $scope.dataEdit();
 
+        // Save Edited Data
         $scope.formData = {};
         $scope.saveEdit = function () {
             $scope.newValue = {
@@ -42,21 +43,48 @@ angular.module('FetchData', [])
                     console.log(response.data);
                     $scope.formData = response.data
                     $('#editModal').modal('hide');
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: 'Data Updated successfully',
-                        timer: 2000, 
-                        timerProgressBar: true,
-                        showConfirmButton: false
-                    });
+                    showAlert();
                 }, function (error) {
                     console.error('Error saving data:', error);
                 });
                 $scope.fetchData();
         };
 
+        // Sweet Alert Pop-up
+        function showAlert() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Data Updated successfully',
+                timer: 2000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                position: 'top-end',
+                toast: true,
+                customClass: {
+                    popup: 'swal2-rectangle'
+                }
+            });
+        }
 
+        // Date Format
+        $scope.$watch('formData.start_date', function(newVal) {
+            if (newVal) {
+                $scope.formattedStartDate = moment(newVal).format('MM/DD/YYYY');
+            } else {
+                $scope.formattedStartDate = '';
+            }
+        });
+
+        $scope.$watch('formData.end_date', function(newVal) {
+            if (newVal) {
+                $scope.formattedEndDate = moment(newVal).format('MM/DD/YYYY');
+            } else {
+                $scope.formattedEndDate = '';
+            }
+        });
+
+        // Hover on Country
         $scope.highlightCountry = function (event) {
             event.target.style.backgroundColor = 'lightblue';
         };
