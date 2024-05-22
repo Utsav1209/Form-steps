@@ -3,6 +3,7 @@ h1 {
     font-size: 36px; 
     font-family:'Courier New', Courier, monospace;
     text-align: center; 
+    padding-top: 15px;
 
 }
 
@@ -58,39 +59,19 @@ tr:hover {
 }
 
 
-table-body {
+.table-body {
     text-align: center;
 }
 
-    
+.progress-bar {
+    position: fixed;
+    width: 100%;
+    height: 1vh;
+    z-index: 9999;
+}
 
-@keyframes slideInFromTop {
-    0% {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-  
-  @keyframes slideOutToTop {
-    0% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-  }
-  
-  .swal2-show {
-    animation: slideInFromTop 0.5s ease forwards;
-  }
-  
-  .swal2-hide {
-    animation: slideOutToTop 0.5s ease forwards;
-  }
-  
+.filled {
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right,red,orange);
+}

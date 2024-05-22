@@ -1,5 +1,5 @@
 angular.module('RegForm', [])
-    .controller('RegCntrl', function ($scope, $http, $filter) {
+    .controller('RegCntrl', function ($scope, $http) {
 
 
         $scope.highlightCountry = function (event) {

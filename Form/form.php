@@ -13,30 +13,35 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-    <script src="script.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#phone').mask('(999) 999-9999');
-        });
-        $(document).ready(function() {
             $('#contact_phone').mask('(999) 999-9999');
         });
         // Use moment.js to format dates
-        $(document).ready(function() {
-            $('#start_date').on('change', function() {
-                var date = moment(this.value, 'YYYY-MM-DD').format('MM/DD/YYYY');
-                $(this).val(date);
-            });
+        // $(document).ready(function() {
+        //     $('#start_date').on('change', function() {
+        //         var date = moment(this.value, 'YYYY-MM-DD').format('MM/DD/YYYY');
+        //         $(this).val(date);
+        //     });
 
-            $('#end_date').on('change', function() {
-                var date = moment(this.value, 'YYYY-MM-DD').format('MM/DD/YYYY');
-                $(this).val(date);
-            });
-        });
+        //     $('#end_date').on('change', function() {
+        //         var date = moment(this.value, 'YYYY-MM-DD').format('MM/DD/YYYY');
+        //         $(this).val(date);
+        //     });
+        // });
     </script>
 </head>
 
 <body>
+    <div class="progress-bar">
+        <div class="filled"></div>
+    </div>
     <h1>Registration Form</h1>
     <h6 class="form-section">Step 1: Basic Details</h6>
     <form class="container-fluid form" ng-submit="saveStep(1)" method="post" ng-disabled="currentStep < 1">
@@ -323,12 +328,14 @@
                 <div class="form-group">
                     <label for="start_date">Group Start Date</label><span style="color: red;">*</span>
                     <input type="date" class="form-control" id="start_date" name="start_date" ng-disabled="currentStep < 3" ng-model="formData.start_date" placeholder="Enter Date" required>
+                    <div id="formatted_start_date" class="formatted-date"></div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="end_date">Group End Date</label><span style="color: red;">*</span>
                     <input type="date" class="form-control" id="end_date" name="end_date" ng-disabled="currentStep < 3" ng-model="formData.end_date" placeholder="Enter Date" required min="{{ formData.start_date | date: 'yyyy-MM-dd' }}">
+                    <div id="formatted_end_date" class="formatted-date"></div>
                 </div>
             </div>
         </div>
@@ -453,6 +460,45 @@
             <button type="button" class="btn btn-primary" ng-click="submitForm()" name="final_submit" ng-disabled="currentStep < 5">Final Submit</button>
         </div>
     </form>
+    <script>
+        const filled = document.querySelector('.filled');
+
+        function update() {
+            filled.style.width = `${((window.scrollY) / (document.body.scrollHeight - window.innerHeight) * 100)}%`;
+            requestAnimationFrame(update);
+        }
+        update();
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const startDateInput = document.getElementById('start_date');
+            const endDateInput = document.getElementById('end_date');
+            const formattedStartDateDisplay = document.getElementById('formatted_start_date');
+            const formattedEndDateDisplay = document.getElementById('formatted_end_date');
+
+            function updateFormattedDate(input, display) {
+                const dateValue = input.value;
+                if (dateValue) {
+                    const formattedDate = moment(dateValue).format('MM-DD-YYYY');
+                    display.textContent = `Selected Date: ${formattedDate}`;
+                } else {
+                    display.textContent = '';
+                }
+            }
+
+            startDateInput.addEventListener('change', () => {
+                updateFormattedDate(startDateInput, formattedStartDateDisplay);
+            });
+
+            endDateInput.addEventListener('change', () => {
+                updateFormattedDate(endDateInput, formattedEndDateDisplay);
+            });
+
+            // Initialize the display if there are pre-filled values
+            updateFormattedDate(startDateInput, formattedStartDateDisplay);
+            updateFormattedDate(endDateInput, formattedEndDateDisplay);
+        });
+    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
