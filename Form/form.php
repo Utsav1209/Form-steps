@@ -447,9 +447,12 @@
             <div class="col-md-2">
                 <button type="submit" class="btn btn-primary" ng-disabled="currentStep < 5">Submit</button>
             </div>
-            <div class="col-md-2">
-                <button type="button" class="btn btn-success" ng-click="submitForm()" name="final_submit" ng-disabled="currentStep < 5">Final Submit</button>
-            </div>
+        </div>
+    </form>
+    <h6 class="form-section"><i class="fa-solid fa-bars-staggered"></i>&nbsp;&nbsp;Step 6: Final Submission</h6>
+    <form class="container-fluid form" ng-submit="saveStep(6)" method="post">
+        <div class="col-md-12" style="text-align:center">
+            <button type="button" class="btn btn-success" ng-click="submitForm()" name="final_submit" ng-disabled="currentStep < 6">Final Submit</button>
         </div>
     </form>
     <script>

@@ -63,7 +63,7 @@ angular.module('FetchData', [])
                 toast: true,
                 customClass: {
                     popup: 'swal2-rectangle'
-                }
+                },
             });
         }
 

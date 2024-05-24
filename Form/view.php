@@ -23,7 +23,7 @@
         th {
             text-align: center;
             color: black;
-            background-color: lightslategray;
+            background-color: #d3dbc6;
         }
 
         td {
@@ -44,8 +44,8 @@
 
 <body ng-app="FetchData" ng-controller="FetchDataCntrl">
     <h1><b>Registration Table</b></h1>
-    <div class="container-fluid" style="margin: 10px 10px;">
-        <table class="table table-bordered">
+    <div class="table-div" style="margin: 10px 10px;">
+        <table class="table">
             <thead>
                 <tr>
                     <th>ID</th>
